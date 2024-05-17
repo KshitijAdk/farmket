@@ -1,24 +1,32 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import router from './routes/admin.js';
 import loginRouter from './routes/login.js';
 import productRouter from './routes/products.js';
 import cartRouter from './routes/cart-routes.js';
-import pool from './controller/db.js';
 import orderRouter from './routes/order-routes.js';
-import dotenv from 'dotenv';
-dotenv.config();
-
+import pool from './controller/db.js';
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
+
+// Use CORS middleware
+app.use(cors({
+  origin: ['https://farmkit.vercel.app', 'http://localhost:5173'], // Add your allowed origins here
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Add allowed headers
+  credentials: true // Allow credentials (cookies, authorization headers, etc.)
+}));
+
+// Route middlewares
 app.use('/api', router);
-app.use(loginRouter)
-app.use('/api', productRouter)
-app.use(cartRouter)
-app.use(orderRouter)
+app.use(loginRouter);
+app.use('/api', productRouter);
+app.use(cartRouter);
+app.use(orderRouter);
 
 
 // API endpoint to save cart data

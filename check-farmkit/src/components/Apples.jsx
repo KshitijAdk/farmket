@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { TiLocation } from "react-icons/ti";
-import { FaCartArrowDown, FaUser } from "react-icons/fa";
+import { FaCartArrowDown } from "react-icons/fa";
 import Header from "./Header";
 import Footer from "./Footer";
+import { FaUser } from "react-icons/fa";
 import appleimg from "../Images/fresh-apple.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -17,9 +18,13 @@ function Apples() {
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log("Backend URL:", backendUrl);
 
+  useEffect(() => {
+
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Backend URL:", backendUrl);
     async function fetchAppleData() {
       try {
         const response = await fetch(`${backendUrl}/api/apples`);
@@ -49,11 +54,12 @@ function Apples() {
     fetchData();
   }, []);
 
-
   const handleSearchLocationChange = (e) => {
     const location = e.target.value;
     setSearchLocation(location);
-    const filteredFarmers = farmerDetails.filter(farmer => farmer.location.toLowerCase().includes(location.toLowerCase()));
+    const filteredFarmers = farmerDetails.filter((farmer) =>
+      farmer.location.toLowerCase().includes(location.toLowerCase())
+    );
     setFilteredFarmerDetails(filteredFarmers);
   };
 
@@ -61,12 +67,12 @@ function Apples() {
     try {
       const email = localStorage.getItem("email");
       if (!email) {
-        navigate('/login')
+        navigate("/login");
         return;
       }
 
       const { product_name, price, product_id } = product;
-      const response = await fetch("http://localhost:8000/user/addToCart", {
+      const response = await fetch(`${backendUrl}/user/addToCart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +99,6 @@ function Apples() {
   return (
     <div className="Container">
       <Header />
-
       <div className="flex justify-around mt-5 mx-11">
         <div className="w-1/4 ml-11">
           <div className="relative w-80 h-96 bg-[#a2fc0f] rounded-2xl shadow text-center transition-transform duration-200 ease-in-out mb-8 overflow-hidden cursor-pointer">
@@ -103,12 +108,11 @@ function Apples() {
               className="w-full h-full object-cover object-center"
             />
           </div>
-
           <div className="product-name">
             <p className="text-3xl text-center font-bold">Apples</p>
           </div>
         </div>
-        <div className="infodetails ">
+        <div className="infodetails">
           <div className=" flex gap-24 justify-center items-center h-24 w-w-6/12 bg-[#fffff]">
             <div className="location">
               <h4 className="font-extrabold">FILTER BY LOCATION</h4>
@@ -157,7 +161,6 @@ function Apples() {
                       <p className="pt-2 text-center">{farmer.farmer_name}</p>
                     </Link>
                   </div>
-                  {/* Farmer Description */}
                   <div className="about w-2/3 text-center">
                     {farmer.product_desc && (
                       <p className="mb-2">{farmer.product_desc}</p>
@@ -178,10 +181,12 @@ function Apples() {
                     </div>
                   </div>
                 </div>
-                <button className="bg-green-500 hover:bg-green-800 text-black hover:text-white font-bold py-2 px-8 rounded-lg shadow-lg flex items-center justify-center space-x-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 transition duration-300 ease-in-out" onClick={() => addToCart(farmer)}>
+                <button
+                  className="bg-green-500 hover:bg-green-800 text-black hover:text-white font-bold py-2 px-8 rounded-lg shadow-lg flex items-center justify-center space-x-2 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 transition duration-300 ease-in-out"
+                  onClick={() => addToCart(farmer)}
+                >
                   <span className="flex items-center">
                     <FaCartArrowDown className="mr-2" />
-
                     <span>Add to Cart</span>
                   </span>
                 </button>

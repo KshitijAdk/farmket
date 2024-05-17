@@ -17,6 +17,7 @@ export default function Login() {
   });
   const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
   const [showSuccess, setShowSuccess] = useState(false); // State to manage success visibility
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +29,8 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/login", formData);
+      console.log(backendUrl)
+      const response = await axios.post(`${backendUrl}/login`, formData);
       if (response.status === 200 && response.data.message === "Login successful") {
         console.log("Login successful");
 

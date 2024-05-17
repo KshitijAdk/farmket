@@ -19,15 +19,23 @@ function Header() {
   const notificationItemCount = 3;
   const [showNotifications, setShowNotifications] = useState(false);
   const notificationRef = useRef(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     // Fetch cart item count from the backend
     const fetchCartItemCount = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/user/productCount?email=${localStorage.getItem("email")}`);
+        const email = localStorage.getItem("email");
+        if (!email) {
+          navigate("/login");
+          return;
+        }
+
+        const response = await fetch(`${backendUrl}/user/productCount?email=${email}`);
         if (!response.ok) {
           throw new Error("Failed to fetch cart item count");
         }
+
         const data = await response.json();
         setCartItemCount(data.count);
       } catch (error) {
@@ -36,7 +44,7 @@ function Header() {
     };
 
     fetchCartItemCount(); // Call the fetchCartItemCount function
-  }, []);
+  }, [backendUrl, navigate]);
 
   const username = localStorage.getItem("username");
 
