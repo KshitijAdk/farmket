@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import user from "../Images/user.png";
 import { StoreContext } from "../../context/context";
 import Notification from "./Notification";
+import { backendUrl } from "../../url";
 
 function Header() {
   const { token, setToken } = useContext(StoreContext);
@@ -19,7 +20,6 @@ function Header() {
   const notificationItemCount = 3;
   const [showNotifications, setShowNotifications] = useState(false);
   const notificationRef = useRef(null);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     // Fetch cart item count from the backend

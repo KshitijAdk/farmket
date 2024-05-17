@@ -15,6 +15,7 @@ import {
     Paper,
     Button,
 } from "@mui/material";
+import { backendUrl } from "../../url";
 
 export default function ProductDetails() {
     const [showPopup, setShowPopup] = useState(false);
@@ -25,7 +26,7 @@ export default function ProductDetails() {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch("http://localhost:8000/api/products")
+        fetch(`${backendUrl}/api/products`)
             .then(response => response.json())
             .then(data => {
                 // Transform data into the format expected by the table
@@ -45,7 +46,7 @@ export default function ProductDetails() {
             .catch(error => console.error("Error fetching data:", error));
 
         // Fetch cart items count
-        fetch("http://localhost:8000/api/row-counts")
+        fetch(`${backendUrl}/api/row-counts`)
             .then((response) => response.json())
             .then((data) => {
                 setCartItemsCount(data.cartItemCount);
@@ -61,7 +62,7 @@ export default function ProductDetails() {
 
     const handleAction = async (productID) => {
         try {
-            const response = await fetch(`http://localhost:8000/api/products/${productID}`, {
+            const response = await fetch(`${backendUrl}/api/products/${productID}`, {
                 method: "DELETE",
             });
 

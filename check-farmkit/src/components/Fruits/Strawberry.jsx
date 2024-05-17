@@ -13,6 +13,7 @@ import {
 import strawberryimg from "../../Images/fresh-strawberry.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { backendUrl } from "../../../url";
 
 function Strawberry() {
   const [farmerDetails, setFarmerDetails] = useState([]);
@@ -25,11 +26,11 @@ function Strawberry() {
   useEffect(() => {
     async function fetchStrawberryData() {
       try {
-        const response = await fetch("http://localhost:8000/api/strawberry");
+        const response = await fetch(`${backendUrl}/api/strawberry`);
         const data = await response.json();
         return data;
       } catch (error) {
-        throw new Error("Error fetching apple data:", error);
+        throw new Error("Error fetching strawberry data:", error);
       }
     }
 
@@ -69,7 +70,7 @@ function Strawberry() {
       }
 
       const { product_name, price, product_id } = product;
-      const response = await fetch("http://localhost:8000/user/addToCart", {
+      const response = await fetch(`${backendUrl}/user/addToCart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

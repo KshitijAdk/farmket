@@ -15,6 +15,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import axios from "axios";
+import { backendUrl } from "../../url";
 
 function createData(products) {
   return { id: Math.random(), products };
@@ -38,7 +39,7 @@ const OrderHistory = () => {
           return;
         }
         const response = await fetch(
-          `http://localhost:8000/cart-items?username=${username}`
+          `${backendUrl}/cart-items?username=${username}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -122,7 +123,7 @@ const OrderHistory = () => {
 
       const responses = await Promise.all(
         deletedProductIds.map((productId) =>
-          axios.delete(`http://localhost:8000/delete-product`, {
+          axios.delete(`${backendUrl}/delete-product`, {
             params: {
               username: username,
               productId: productId, // Pass productId as a single value
@@ -147,7 +148,7 @@ const OrderHistory = () => {
       }, 1000); // Automatically close after 1 second
 
       // Send updated total price to backend
-      await axios.post(`http://localhost:8000/update-total-price`, {
+      await axios.post(`${backendUrl}/update-total-price`, {
         username: username,
         totalPrice: updatedTotalPrice,
       });

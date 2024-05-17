@@ -13,6 +13,7 @@ import {
 import chickenimg from "../../Images/chicken.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { backendUrl } from "../../../url";
 
 function Chicken() {
   const [farmerDetails, setFarmerDetails] = useState([]);
@@ -25,7 +26,7 @@ function Chicken() {
   useEffect(() => {
     async function fetchChickenData() {
       try {
-        const response = await fetch("http://localhost:8000/api/chicken");
+        const response = await fetch(`${backendUrl}/api/chicken`);
         const data = await response.json();
         return data;
       } catch (error) {
@@ -69,7 +70,7 @@ function Chicken() {
       }
 
       const { product_name, price, product_id } = product;
-      const response = await fetch("http://localhost:8000/user/addToCart", {
+      const response = await fetch(`${backendUrl}/user/addToCart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

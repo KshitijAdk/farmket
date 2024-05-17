@@ -4,6 +4,7 @@ import appleimg from "../Images/fresh-apple.jpg";
 import Header from "./Header";
 import Footer from "./Footer";
 import { IoArrowBack } from "react-icons/io5";
+import { backendUrl } from "../../url";
 
 export default function YourCart() {
   const [cartItems, setCartItems] = useState([]);
@@ -28,7 +29,7 @@ export default function YourCart() {
 
   const fetchCartItems = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/user/cartItems?email=${email}`);
+      const response = await fetch(`${backendUrl}/user/cartItems?email=${email}`);
       if (!response.ok) {
         throw new Error("Failed to fetch cart items");
       }
@@ -44,7 +45,7 @@ export default function YourCart() {
     try {
       console.log(email);
       console.log('Sending productId:', productId);
-      const response = await fetch(`http://localhost:8000/delete_from_cart?product_id=${productId}&email=${email}`, {
+      const response = await fetch(`${backendUrl}/delete_from_cart?product_id=${productId}&email=${email}`, {
         method: 'DELETE'
       });
       if (!response.ok) {
@@ -71,7 +72,7 @@ export default function YourCart() {
       console.log('Data to be sent to the backend:', requestData);
   
       // Save cart items
-      const responseSaveCart = await fetch('http://localhost:8000/save_cart_items', {
+      const responseSaveCart = await fetch(`${backendUrl}/save_cart_items`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -84,7 +85,7 @@ export default function YourCart() {
       }
   
       // Clear cart items after successful purchase
-      const responseClearCart = await fetch('http://localhost:8000/clear_cart_items', {
+      const responseClearCart = await fetch(`${backendUrl}/clear_cart_items`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

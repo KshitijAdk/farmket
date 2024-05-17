@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import farmkit from "../Images/cover-image.jpg";
+import { backendUrl } from "../../url";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -121,7 +122,7 @@ export default function Signup() {
   const handleSignUp = async () => {
     if (validateForm()) {
       try {
-        const response = await axios.post("http://localhost:8000/signup", formData);
+        const response = await axios.post(`${backendUrl}/signup`, formData);
         if (response.status === 200 && response.data === "User data saved successfully") {
           showPopupMessage("Account created successfully");
           setTimeout(() => {

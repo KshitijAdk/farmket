@@ -15,6 +15,7 @@ import {
     Paper,
     Button,
 } from "@mui/material";
+import { backendUrl } from "../../url";
 
 function createData(username, email, password, phone) {
     return { username, email, password, phone };
@@ -30,7 +31,7 @@ export default function UserDetails() {
         // Fetch users data when the component mounts
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/users');
+                const response = await axios.get(`${backendUrl}/api/users`);
                 setRows(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
@@ -39,7 +40,7 @@ export default function UserDetails() {
         fetchUsers();
 
         // Fetch cart items count
-        fetch("http://localhost:8000/api/row-counts")
+        fetch(`${backendUrl}/api/row-counts`)
             .then((response) => response.json())
             .then((data) => {
                 setCartItemsCount(data.cartItemCount);

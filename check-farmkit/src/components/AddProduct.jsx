@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { backendUrl } from "../../url";
 
 const AddProduct = ({ handleClose }) => {
     const [product, setProduct] = useState({
@@ -29,7 +30,7 @@ const AddProduct = ({ handleClose }) => {
         
         try {
             // Make a POST request to save the new product
-            const response = await axios.post('http://localhost:8000/api/products', newProduct);
+            const response = await axios.post(`${backendUrl}/api/products`, newProduct);
             // Handle successful response
             console.log('Product added successfully:', response.data);
             // Close the add product form

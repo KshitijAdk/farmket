@@ -13,6 +13,7 @@ import {
 
 import mangoimg from "../../Images/fresh-mango.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import { backendUrl } from "../../../url";
 
 function Mango() {
   const [farmerDetails, setFarmerDetails] = useState([]);
@@ -25,7 +26,7 @@ function Mango() {
   useEffect(() => {
     async function fetchMangoData() {
       try {
-        const response = await fetch("http://localhost:8000/api/mango");
+        const response = await fetch(`${backendUrl}/api/mango`);
         const data = await response.json();
         return data;
       } catch (error) {
@@ -69,7 +70,7 @@ function Mango() {
       }
 
       const { product_name, price, product_id } = product;
-      const response = await fetch("http://localhost:8000/user/addToCart", {
+      const response = await fetch(`${backendUrl}/user/addToCart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

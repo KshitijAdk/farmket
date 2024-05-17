@@ -7,6 +7,7 @@ import user from "../Images/user.png"
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
+import { backendUrl } from "../../url";
 
 
 export default function UserProfile() {
@@ -29,7 +30,7 @@ export default function UserProfile() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/change-password", {
+      const response = await axios.post(`${backendUrl}/change-password`, {
         username: username,
         currentPassword: formData.currentPassword,
         newPassword: formData.newPassword,

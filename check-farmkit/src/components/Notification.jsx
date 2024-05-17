@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RiCheckLine, RiCloseLine } from "react-icons/ri";
+import { backendUrl } from "../../url";
 
 function Notification() {
     const [notifications, setNotifications] = useState([]);
@@ -7,7 +8,7 @@ function Notification() {
 
     useEffect(() => {
         // Fetch notifications for the logged-in user
-        fetch(`http://localhost:8000/api/notifications?email=${userEmail}`)
+        fetch(`${backendUrl}/api/notifications?email=${userEmail}`)
             .then((response) => response.json())
             .then((data) => setNotifications(data))
             .catch((error) => console.error("Error fetching notifications:", error));
