@@ -2,14 +2,9 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { TiLocation } from "react-icons/ti";
-import { FaCartArrowDown } from "react-icons/fa";
+import { FaCartArrowDown, FaUser } from "react-icons/fa";
 import Header from "./Header";
 import Footer from "./Footer";
-import {
-  // FaFacebookMessenger,
-  FaUser,
-} from "react-icons/fa";
-
 import appleimg from "../Images/fresh-apple.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -19,13 +14,15 @@ function Apples() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchLocation, setSearchLocation] = useState("");
-  const [filteredFarmerDetails, setFilteredFarmerDetails] = useState([]); // Add this line
+  const [filteredFarmerDetails, setFilteredFarmerDetails] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
     async function fetchAppleData() {
       try {
-        const response = await fetch("http://localhost:8000/api/apples");
+        const response = await fetch(`${backendUrl}/api/apples`);
         const data = await response.json();
         return data;
       } catch (error) {
@@ -37,8 +34,8 @@ function Apples() {
       try {
         const data = await fetchAppleData();
         if (Array.isArray(data)) {
-          setFarmerDetails(data); // Set farmerDetails here
-          setFilteredFarmerDetails(data); // Also set filteredFarmerDetails
+          setFarmerDetails(data);
+          setFilteredFarmerDetails(data);
         } else {
           throw new Error("Data format is incorrect.");
         }

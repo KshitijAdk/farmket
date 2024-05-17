@@ -2,10 +2,10 @@ import mysql from "mysql";
 
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'localhost',
-    user: 'root',
-    password: '12345',
-    database: 'farmket'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DBNAME
 });
 
 pool.getConnection((err, connection) => {

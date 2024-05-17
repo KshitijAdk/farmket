@@ -6,6 +6,9 @@ import productRouter from './routes/products.js';
 import cartRouter from './routes/cart-routes.js';
 import pool from './controller/db.js';
 import orderRouter from './routes/order-routes.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
