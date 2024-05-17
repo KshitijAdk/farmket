@@ -2,7 +2,6 @@ import React from "react";
 import LandingPage from "./components/LandingPage";
 import Fruits from "./components/Fruits";
 import Apples from "./components/Apples";
-import Profile from "./components/Profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Importing necessary components from react-router-dom
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -60,7 +59,6 @@ const App = () => {
           <Route path="/cabbage" element={<Cabbage />} />
           <Route path="/carrot" element={<Carrot />} />
           <Route path="/tomato" element={<Tomato />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Yourcart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
