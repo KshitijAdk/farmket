@@ -6,6 +6,8 @@ import { FcGoogle } from "react-icons/fc";
 import farmkit from "../Images/cover-image.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/context";
+import { backendUrl } from "../../url";
+import { ContactlessOutlined } from "@mui/icons-material";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -17,7 +19,8 @@ export default function Login() {
   });
   const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
   const [showSuccess, setShowSuccess] = useState(false); // State to manage success visibility
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+  console.log(backendUrl)
 
   const handleChange = (e) => {
     const { name, value } = e.target;

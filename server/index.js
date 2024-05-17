@@ -13,13 +13,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Use CORS middleware
-app.use(cors({
-  origin: ['https://farmkit.vercel.app', 'http://localhost:5173'], // Add your allowed origins here
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Add allowed headers
-  credentials: true // Allow credentials (cookies, authorization headers, etc.)
-}));
+app.use(cors());
 
 // Route middlewares
 app.use('/api', router);

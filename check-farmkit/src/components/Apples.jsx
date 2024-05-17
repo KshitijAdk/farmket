@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import appleimg from "../Images/fresh-apple.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { backendUrl } from "../../url";
 
 function Apples() {
   const [farmerDetails, setFarmerDetails] = useState([]);
@@ -18,12 +19,8 @@ function Apples() {
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState([]);
   const navigate = useNavigate();
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  console.log("Backend URL:", backendUrl);
-
   useEffect(() => {
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     console.log("Backend URL:", backendUrl);
     async function fetchAppleData() {
       try {
