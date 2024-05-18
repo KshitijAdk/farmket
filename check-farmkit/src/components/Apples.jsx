@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { TiLocation } from "react-icons/ti";
-import { FaCartArrowDown } from "react-icons/fa";
+import { FaCartArrowDown, FaUser } from "react-icons/fa";
 import Header from "./Header";
 import Footer from "./Footer";
-import { FaUser } from "react-icons/fa";
 import appleimg from "../Images/fresh-apple.jpg";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { backendUrl } from "../../url";
 
 function Apples() {
@@ -20,21 +18,11 @@ function Apples() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     console.log("Backend URL:", backendUrl);
-    async function fetchAppleData() {
+    const fetchAppleData = async () => {
       try {
         const response = await fetch(`${backendUrl}/api/apples`);
         const data = await response.json();
-        return data;
-      } catch (error) {
-        throw new Error("Error fetching apple data:", error);
-      }
-    }
-
-    async function fetchData() {
-      try {
-        const data = await fetchAppleData();
         if (Array.isArray(data)) {
           setFarmerDetails(data);
           setFilteredFarmerDetails(data);
@@ -42,13 +30,13 @@ function Apples() {
           throw new Error("Data format is incorrect.");
         }
       } catch (error) {
-        setError(error);
+        setError(error.message || "Error fetching apple data.");
       } finally {
         setLoading(false);
       }
-    }
+    };
 
-    fetchData();
+    fetchAppleData();
   }, []);
 
   const handleSearchLocationChange = (e) => {
@@ -84,12 +72,14 @@ function Apples() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add item to cart.");
+        const { error } = await response.json();
+        throw new Error(error || "Failed to add item to cart.");
       }
 
       alert("Item added to cart successfully!");
     } catch (error) {
       console.error("Error adding item to cart:", error);
+      alert(error.message || "Failed to add item to cart.");
     }
   };
 
@@ -110,7 +100,7 @@ function Apples() {
           </div>
         </div>
         <div className="infodetails">
-          <div className=" flex gap-24 justify-center items-center h-24 w-w-6/12 bg-[#fffff]">
+          <div className="flex gap-24 justify-center items-center h-24 w-w-6/12 bg-[#fffff]">
             <div className="location">
               <h4 className="font-extrabold">FILTER BY LOCATION</h4>
               <div className="mt-4">
@@ -139,7 +129,15 @@ function Apples() {
               </div>
             </div>
           </div>
-          {filteredFarmerDetails.length === 0 ? (
+          {loading ? (
+            <div className="flex justify-center items-center h-40">
+              <p className="text-lg">Loading...</p>
+            </div>
+          ) : error ? (
+            <div className="flex justify-center items-center h-40">
+              <p className="text-lg text-red-600">{error}</p>
+            </div>
+          ) : filteredFarmerDetails.length === 0 ? (
             <div className="flex justify-center items-center h-40">
               <p className="text-lg">No products found</p>
             </div>
@@ -196,4 +194,5 @@ function Apples() {
     </div>
   );
 }
+
 export default Apples;
