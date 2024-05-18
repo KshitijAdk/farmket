@@ -68,10 +68,9 @@ export default function YourCart() {
         cartItems: cartItems,
         totalAmount: totalAmount
       };
-  
-      console.log('Data to be sent to the backend:', requestData);
-  
-      // Save cart items
+
+      console.log('Sending request to save cart items:', requestData);
+
       const responseSaveCart = await fetch(`${backendUrl}/save_cart_items`, {
         method: 'POST',
         headers: {
@@ -79,12 +78,15 @@ export default function YourCart() {
         },
         body: JSON.stringify(requestData)
       });
-  
+
       if (!responseSaveCart.ok) {
-        throw new Error("Failed to save cart items");
+        const errorText = await responseSaveCart.text();
+        console.error("Failed to save cart items:", errorText);
+        throw new Error(`Failed to save cart items: ${responseSaveCart.statusText}`);
       }
-  
-      // Clear cart items after successful purchase
+
+      console.log('Cart items saved successfully');
+
       const responseClearCart = await fetch(`${backendUrl}/clear_cart_items`, {
         method: 'POST',
         headers: {
@@ -92,18 +94,21 @@ export default function YourCart() {
         },
         body: JSON.stringify({ email: email })
       });
-  
+
       if (!responseClearCart.ok) {
-        throw new Error("Failed to clear cart items");
+        const errorText = await responseClearCart.text();
+        console.error("Failed to clear cart items:", errorText);
+        throw new Error(`Failed to clear cart items: ${responseClearCart.statusText}`);
       }
-  
-      // Clear local cart items state
+
+      console.log('Cart items cleared successfully');
+
       setCartItems([]);
     } catch (error) {
       console.error("Error buying items:", error.message);
     }
   };
-  
+
 
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
